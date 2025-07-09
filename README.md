@@ -37,3 +37,6 @@ Each folder contains a focused exercise or mini-project. For example:
 
 - Python 3.x
 - Some scripts may require additional packages (e.g., `numpy`, `matplotlib`, `pandas`). Install packages as needed.
+
+##Language
+The code is written in French, as part of a French course.
