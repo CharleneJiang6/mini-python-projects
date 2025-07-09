@@ -3,26 +3,22 @@ import pandas as pd
 
 
 def main():
-    # connexion à la db alesc.sqlite, créée si inexistante
     with sqlite3.connect('alesc.sqlite') as connexion:
         print("Initialisation de la base de données...")
         curseur = connexion.cursor()
         init_db(connexion, curseur)
 
-        # on lit les fichiers excel à l'aide de pandas
         logeurs = pd.read_excel('logeurs.xlsx')
         logements = pd.read_excel('logements.xlsx')
         etudiants = pd.read_excel('etudiants.xlsx')
         insert_db([logeurs, logements, etudiants], connexion, curseur)
 
-        # le système de menu permet d'ajouter d'autres fonctions facilement quand on veut
-        print("Initialisation terminée.\n\n"
-              "+---------------------------------------------------------+\n|\n"
-              "|  Entrer un mot-clé pour effectuer une opération :\n|\n"
-              "|  > 'logement' : obtenir des informations sur un logement\n"
-              "|  > 'exit' : quitter le programme\n"
-              "|\n+---------------------------------------------------------+\n")
         while True:
+            print("+---------------------------------------------------------+\n|\n"
+                  "|  Entrer un mot-clé pour effectuer une opération :\n|\n"
+                  "|  > 'logement' : obtenir des informations sur un logement\n"
+                  "|  > 'exit' : quitter le programme\n"
+                  "|\n+---------------------------------------------------------+\n")
             choix = input("Mot-clé > ").lower()
             if choix == "logement":
                 nom = input("Entrer le nom du logeur : ").lower()
@@ -90,14 +86,6 @@ def init_db(connexion: sqlite3.Connection, curseur: sqlite3.Cursor):
     connexion.commit()
 
 
-    # pas de fichier SQL demandé par le TP, mais il était possible de creer la BDD en exécutant le fichier SQL.
-    # exécuter le fichier alesc SQL contenant les instructions SQL pour créer les tables
-    # with open('alesc.sql', 'r') as file:
-    #     init_script = file.read()
-    #     curseur.executescript(init_script)
-    #     connexion.commit()
-
-
 def insert_db(sources: list[pd.DataFrame], connexion: sqlite3.Connection, curseur: sqlite3.Cursor) -> None:
     """
     Insère les éléments fournis en source dans la base de données.
@@ -107,14 +95,11 @@ def insert_db(sources: list[pd.DataFrame], connexion: sqlite3.Connection, curseu
     :param curseur: curseur actif
     """
 
-    # on a une boucle pour chaque table, on insère ligne par ligne :
-
     # logeurs
     for index, row in sources[0].iterrows():
         curseur.execute("""
                     INSERT INTO Logeur (nom, prenom, numero_rue, nom_rue, code_postal, ville) VALUES (?,?,?,?,?,?)""",
                         tuple(row))
-        # chaque valeur dans le tuple(row) remplacera respectivement un "point d'interrogation"
 
     # logements
     for index, row in sources[1].iterrows():
@@ -122,8 +107,7 @@ def insert_db(sources: list[pd.DataFrame], connexion: sqlite3.Connection, curseu
         req_id_logueur = "SELECT l.id_logeur FROM Logeur l WHERE (l.nom =:nom AND l.prenom =:prenom )"
         curseur.execute(req_id_logueur,
                         {"nom": row.nom_logeur, "prenom": row.prenom_logeur})
-        # dans la requête SQL, la valeur d'une variable précédé par deux-points sera issue du dictionnaire
-        # passé en paramètre de curseur.execute()
+
         resultat = curseur.fetchone()
         if not resultat:
             raise ValueError('Logeur non trouvé')
