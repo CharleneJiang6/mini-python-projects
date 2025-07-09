@@ -1,0 +1,5 @@
+Logeur(#id_logeur:int, nom:str, prenom:str, numero_rue:int, nom_rue:str, code_postal:int, ville:str) avec (nom, prenom, numero_rue, nom_rue, code_postal, ville) unique et tous non nuls
+
+Logement(#id_logement:int, type:{chambre, studio, f1,f2, f3, f4, f5, maison}, numero_rue:int, nom_rue:str, code_postal:int, ville:str, label:int, logeur => Logeur) avec type, nom, prenom, numero_rue, nom_rue, code_postal, ville et logeur non nuls
+
+Etudiant(#id_etu:int, nom:str, prenom:str, semestre:str, logement => Logement, logeur => Logeur) avec nom, prenom et semestre non nuls
