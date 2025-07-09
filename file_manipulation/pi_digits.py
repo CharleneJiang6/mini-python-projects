@@ -5,7 +5,7 @@ from string import punctuation
 from math import pi
 
 
-def calculate_digits_from_text(chemin:str):
+def calculate_digits_from_text(chemin: str):
     """
     Calcule les digits d'un nombre qui est de la forme d'un chiffre avec une virgule suivi d'autres chiffres,
     à l'aide d'un texte.
@@ -15,10 +15,7 @@ def calculate_digits_from_text(chemin:str):
 
     with open(chemin, encoding="utf-8") as file_digits:
         contenu = file_digits.read()
-        # for caractere in contenu:
-        #     if caractere in punctuation:
-        #         contenu = contenu.replace(caractere, ' ')
-        for p in punctuation: # OPTIMISATION
+        for p in punctuation:  # OPTIMISATION
             contenu = contenu.replace(p, ' ')
         contenu = contenu.split()
         number_digits = ''
@@ -28,9 +25,9 @@ def calculate_digits_from_text(chemin:str):
         return number_digits
 
 
-def write_digits_to_file(file_name:str,nb:float):
+def write_digits_to_file(file_name: str, nb: float):
     '''écrit le nombre résultat dans un fichier'''
-    with open(file_name,"w") as file:
+    with open(file_name, "w") as file:
         file.write(str(nb))
 
 
@@ -51,6 +48,5 @@ def main():
             print('poeme.txt ne représente pas les digits de pi')
 
 
-if __name__=='__main__':
+if __name__ == '__main__':
     main()
-
