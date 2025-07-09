@@ -1,4 +1,3 @@
-import math  # module marqué comme inutilisé car l'expression l'utilisant est un str et doit être évaluée
 import tkinter as tk
 
 
@@ -68,7 +67,6 @@ class Calculatrice(tk.Tk):
         # une fois que tous nos widgets sont placés, on redimensionne la page pour tout fit
         self.centrer_fenetre()
 
-
     def click_button(self, button_value: str):
         """Évalue la valeur affichée par un bouton afin de l'afficher sur l'interface"""
 
@@ -108,13 +106,11 @@ class Calculatrice(tk.Tk):
         else:
             self.output.set(self.output.get() + button_value)
 
-
     def clear(self):
         """Efface la zone d'affichage, l'expression mathématique et le label pour les erreurs éventuelles."""
         self.output.set('')
         self.math_formula.set('')
         self.label_erreur.set('')
-
 
     def resultat(self):
         """Calcule et renvoie le résultat final du calcul."""
@@ -186,7 +182,6 @@ class Calculatrice(tk.Tk):
         else:
             self.label_erreur.set("Veuillez entrer un calcul.")
 
-
     def toggle_history(self):
         """
         Le clic sur le bouton Historique permet d'afficher l'historique ou de le cacher.
@@ -205,7 +200,6 @@ class Calculatrice(tk.Tk):
             self.clavier.pack()
             self.output.set(self.history_memory)
             self.affichage.config(height=2)
-
 
     def centrer_fenetre(self):
         """Centre la fenêtre au centre de l'écran"""
