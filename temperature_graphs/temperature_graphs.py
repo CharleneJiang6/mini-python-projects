@@ -45,4 +45,3 @@ def rmse(v, t):
 
 if __name__ == "__main__":
     main()
-
